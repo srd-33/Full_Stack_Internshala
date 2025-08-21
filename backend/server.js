@@ -3,11 +3,11 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectDB } from "./config/db.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
-
 import agentRoutes from "./routes/agentRoutes.js";
 import recordRoutes from "./routes/recordRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import serverless from "serverless-http";
 
 dotenv.config();
 connectDB();
@@ -26,11 +26,17 @@ app.get("/", (req, res) => {
   res.json({ success: true, message: "API is working 🚀" });
 });
 
-// 404 handler
 app.use(notFound);
 
-// Global error handler
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Export for serverless
+export const handler = serverless(app);
+
+// Run normally if local
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () =>
+    console.log(`Server running on http://localhost:${PORT}`)
+  );
+}
