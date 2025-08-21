@@ -22,7 +22,7 @@ app.use("/api/records", recordRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/auth", authRoutes);
 
-app.get("/api/working", (req, res) => {
+app.get("/", (req, res) => {
   res.json({ success: true, message: "API is working 🚀" });
 });
 
