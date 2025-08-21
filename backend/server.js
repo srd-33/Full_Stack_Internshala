@@ -12,9 +12,27 @@ import serverless from "serverless-http";
 dotenv.config();
 connectDB();
 
+
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+const allowedOrigins = [
+  "http://localhost:5000",  
+   "http://localhost:5173",               // local dev
+  "https://full-stack2-frontend2.vercel.app" // deployed frontend
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 
 // Routes
 app.use("/api/agents", agentRoutes);
