@@ -10,12 +10,12 @@ A MERN stack application for managing agents, uploading CSV files, and distribut
 git clone <-repo-url>
 
 ## for Backend (run the following commands)
-npm i
-npm run server
+1.npm i 
+2.npm run server
 
 ## for frontend (run the following commands)
-npm i
-npm run dev
+1.npm i
+2.npm run dev
 
 ## Create a .env file in the backend with the following:
 MONGO_URI=your_mongodb_connection_string
